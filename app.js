@@ -116,6 +116,37 @@ document.querySelector("#focus-area").addEventListener("click", () => fitMap(fal
 drawList(currentRoute);
 startMap();
 
+const dayTabs = [...document.querySelectorAll(".day-bar [data-day]")];
+const dayPanels = [...document.querySelectorAll("[data-day-panel]")];
+function activateDay(day, scroll = true) {
+  const panel = dayPanels.find(item => item.dataset.dayPanel === day);
+  if (!panel) return;
+  dayTabs.forEach(tab => {
+    const selected = tab.dataset.day === day;
+    tab.setAttribute("aria-selected", String(selected));
+    tab.tabIndex = selected ? 0 : -1;
+    if (selected) tab.scrollIntoView({ behavior: "smooth", inline: "nearest", block: "nearest" });
+  });
+  dayPanels.forEach(item => { item.hidden = item !== panel; });
+  if (scroll) {
+    history.replaceState(null, "", `#${panel.id}`);
+    panel.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+}
+dayTabs.forEach((tab, index) => {
+  tab.addEventListener("click", () => activateDay(tab.dataset.day));
+  tab.addEventListener("keydown", event => {
+    if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+    event.preventDefault();
+    const next = event.key === "Home" ? 0 : event.key === "End" ? dayTabs.length - 1
+      : (index + (event.key === "ArrowRight" ? 1 : -1) + dayTabs.length) % dayTabs.length;
+    activateDay(dayTabs[next].dataset.day);
+    dayTabs[next].focus();
+  });
+});
+const initialPanel = dayPanels.find(item => `#${item.id}` === location.hash);
+if (initialPanel) activateDay(initialPanel.dataset.dayPanel, false);
+
 document.querySelectorAll("[data-check]").forEach(box => {
   const key = `jp-trip-discussion-${box.dataset.check}`;
   try { box.checked = localStorage.getItem(key) === "true"; } catch (_) { /* local storage may be unavailable */ }

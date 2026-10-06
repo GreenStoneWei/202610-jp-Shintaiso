@@ -1,0 +1,79 @@
+.day-bar {
+  position: sticky;
+  top: 0;
+  z-index: 500;
+  overflow-x: auto;
+  border-bottom: 1px solid var(--line);
+  background: rgba(245, 241, 233, .97);
+  box-shadow: 0 7px 25px rgba(16, 42, 40, .07);
+  backdrop-filter: blur(14px);
+  scrollbar-width: thin;
+}
+
+.day-bar-inner {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 5px;
+  width: min(1080px, calc(100% - 36px));
+  margin: auto;
+  padding: 8px 0;
+}
+
+.day-bar button {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 0 7px;
+  min-width: 0;
+  padding: 8px 10px;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--pine);
+  text-align: left;
+  cursor: pointer;
+}
+
+.day-bar button:hover { background: #e9eee8; }
+.day-bar button[aria-selected="true"] { background: var(--pine); color: #fff; }
+.day-bar button:focus-visible { outline: 3px solid var(--gold); outline-offset: -2px; }
+.day-bar small { grid-column: 1 / -1; font-size: 10px; font-weight: 700; letter-spacing: .08em; }
+.day-bar strong { font-size: 25px; line-height: 1.1; }
+.day-bar em { overflow: hidden; font-size: 12px; font-style: normal; font-weight: 700; text-overflow: ellipsis; white-space: nowrap; }
+.schedule-legend { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; padding-top: 24px; color: var(--muted); font-size: 11px; }
+.schedule-legend > span:first-child { margin-right: 3px; font-weight: 700; }
+.day-panel { min-height: 420px; scroll-margin-top: 95px; }
+.day-panel .section-title .eyebrow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.schedule-card { padding: 12px 24px; border: 1px solid var(--line); border-radius: 18px; background: var(--card); }
+.schedule-card .timeline li { grid-template-columns: 160px minmax(0, 1fr); padding: 24px 0; }
+.schedule-card .timeline time { font-size: 13px; }
+.schedule-card .timeline h3 { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; font-size: 19px; }
+.schedule-card .timeline p { max-width: 740px; margin-top: 7px; font-size: 14px; line-height: 1.8; }
+.status-chip { display: inline-flex; align-items: center; width: max-content; padding: 3px 8px; border-radius: 999px; font-size: 10px; font-weight: 700; letter-spacing: 0; line-height: 1.4; vertical-align: middle; white-space: nowrap; }
+.chip-confirmed { background: #d8eadf; color: #1b6743; }
+.chip-discuss { background: #fce8de; color: #a4422d; }
+.chip-plan { background: #e7edf8; color: #3c5f93; }
+.chip-option { background: #f6eecb; color: #7b6020; }
+.chip-verify { background: #ece8f5; color: #705393; }
+.route-panel .timeline h3 { display: flex; align-items: center; flex-wrap: wrap; gap: 7px; }
+.transfer-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.transfer-grid article { padding: 20px; border: 1px solid var(--line); border-radius: 16px; background: var(--card); }
+.transfer-grid b { color: var(--coral); font-size: 11px; letter-spacing: .06em; }
+.transfer-grid h3 { margin: 9px 0 8px; font-size: 18px; line-height: 1.4; }
+.transfer-grid p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.8; }
+.section-links { display: flex; flex-wrap: wrap; gap: 8px; padding: 0 0 26px; }
+.section-links a { padding: 6px 10px; border: 1px solid #cbd8cd; border-radius: 999px; color: var(--pine); font-size: 12px; font-weight: 700; text-decoration: none; }
+.section-links a:hover { background: #e9eee8; }
+
+@media (max-width: 760px) {
+  .day-bar-inner { display: flex; gap: 5px; width: max-content; min-width: 100%; margin: 0; padding: 7px 12px; }
+  .day-bar button { flex: 0 0 92px; padding: 7px 9px; }
+  .day-bar strong { font-size: 22px; }
+  .day-bar em { font-size: 11px; }
+  .day-panel { min-height: 0; scroll-margin-top: 80px; }
+  .schedule-card { padding: 6px 17px; }
+  .schedule-card .timeline li { grid-template-columns: 1fr; gap: 3px; padding: 19px 0; }
+  .schedule-card .timeline h3 { font-size: 17px; }
+  .schedule-card .timeline p { font-size: 13px; }
+  .transfer-grid { grid-template-columns: 1fr; }
+}
