@@ -116,6 +116,92 @@ document.querySelector("#focus-area").addEventListener("click", () => fitMap(fal
 drawList(currentRoute);
 startMap();
 
+const kamikochiPoints = {
+  takasaki: { name: "高崎站／Arena", note: "週日比賽後的出發地", lat: 36.3225, lng: 139.0128, kind: "shared", label: "高" },
+  nagano: { name: "長野站", note: "B：週日新幹線轉特急", lat: 36.6431, lng: 138.1886, kind: "rail", label: "長" },
+  matsumoto: { name: "松本站", note: "B：週日晚住宿候選、週一搭上高地線", lat: 36.2304, lng: 137.9643, kind: "rail", label: "松" },
+  shinShimashima: { name: "新島々站", note: "B：電車轉預約優先巴士", lat: 36.18973, lng: 137.82165, kind: "rail", label: "新" },
+  sawando: { name: "澤渡巴士總站", note: "A：停車後搭接駁車", lat: 36.16459, lng: 137.65534, kind: "drive", label: "澤" },
+  taisho: { name: "大正池", note: "兩案在此下車，開始散步", lat: 36.2283, lng: 137.6222, kind: "walk", label: "1" },
+  tashiro: { name: "田代池／田代濕原", note: "大正池與河童橋之間的自然研究路", lat: 36.2356, lng: 137.6245, kind: "walk", label: "2" },
+  kappa: { name: "河童橋", note: "午餐、休息；視天氣決定是否續走", lat: 36.2483, lng: 137.6376, kind: "walk", label: "3" },
+  dakesawa: { name: "岳澤濕原", note: "河童橋往明神池的右岸步道", lat: 36.2537, lng: 137.6431, kind: "walk", label: "4" },
+  myojin: { name: "明神池", note: "此行最深入的位置，沒有公車站", lat: 36.25397, lng: 137.66384, kind: "walk", label: "5" },
+  terminal: { name: "上高地巴士總站", note: "回程在此搭車；A 往澤渡、B 往新島々", lat: 36.2458, lng: 137.6364, kind: "shared", label: "巴" },
+};
+const kamikochiRoutes = {
+  drive: ["takasaki", "sawando", "taisho"],
+  rail: ["takasaki", "nagano", "matsumoto", "shinShimashima", "taisho"],
+  walk: ["taisho", "tashiro", "kappa", "dakesawa", "myojin", "kappa", "terminal"],
+};
+let kamikochiMap;
+const kamikochiLayers = {};
+const kamikochiMarkers = {};
+
+function focusKamikochi(view) {
+  if (!kamikochiMap) return;
+  const ids = view === "all" ? [...new Set(Object.values(kamikochiRoutes).flat())]
+    : [...new Set(kamikochiRoutes[view] || kamikochiRoutes.walk)];
+  const bounds = ids.map(id => [kamikochiPoints[id].lat, kamikochiPoints[id].lng]);
+  kamikochiMap.fitBounds(bounds, { padding: [35, 35], maxZoom: view === "walk" ? 13 : 11 });
+  Object.entries(kamikochiLayers).forEach(([name, line]) => line.setStyle({
+    opacity: view === "all" || view === name ? 0.82 : 0.2,
+  }));
+  Object.entries(kamikochiMarkers).forEach(([id, marker]) => marker.setOpacity(
+    view === "all" || ids.includes(id) ? 1 : 0.35,
+  ));
+  document.querySelectorAll("[data-kamikochi-view]").forEach(button => {
+    button.setAttribute("aria-pressed", String(button.dataset.kamikochiView === view));
+  });
+}
+
+function startKamikochiMap() {
+  if (!window.L) {
+    document.querySelector("#kamikochi-map").hidden = true;
+    document.querySelector("#kamikochi-map-fallback").hidden = false;
+    document.querySelector(".kamikochi-map-actions").hidden = true;
+    return;
+  }
+  kamikochiMap = L.map("kamikochi-map", { scrollWheelZoom: false });
+  const tiles = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    maxZoom: 19, attribution: "&copy; OpenStreetMap contributors",
+  });
+  let tileErrors = 0;
+  tiles.on("tileerror", () => {
+    tileErrors += 1;
+    if (tileErrors >= 5) {
+      document.querySelector("#kamikochi-map").hidden = true;
+      document.querySelector("#kamikochi-map-fallback").hidden = false;
+      document.querySelector(".kamikochi-map-actions").hidden = true;
+    }
+  });
+  tiles.addTo(kamikochiMap);
+  const colors = { drive: "#bd7144", rail: "#496f9c", walk: "#328163" };
+  Object.entries(kamikochiRoutes).forEach(([name, route]) => {
+    kamikochiLayers[name] = L.polyline(route.map(id => {
+      const point = kamikochiPoints[id];
+      return [point.lat, point.lng];
+    }), { color: colors[name], weight: name === "walk" ? 4 : 3, opacity: 0.82, dashArray: name === "walk" ? undefined : "8 7" }).addTo(kamikochiMap);
+  });
+  Object.entries(kamikochiPoints).forEach(([id, point]) => {
+    const marker = L.marker([point.lat, point.lng], {
+      icon: L.divIcon({
+        html: `<span class="kamikochi-pin pin-${point.kind}">${point.label}</span>`,
+        className: "kamikochi-pin-icon", iconSize: [27, 27], iconAnchor: [13, 13],
+      }),
+    });
+    marker.bindPopup(`<strong>${point.name}</strong><span>${point.note}</span><a href="${googleMaps(point.name)}" target="_blank" rel="noreferrer">Google Maps 開啟 ↗</a>`);
+    marker.addTo(kamikochiMap);
+    kamikochiMarkers[id] = marker;
+  });
+  focusKamikochi("all");
+}
+
+document.querySelectorAll("[data-kamikochi-view]").forEach(button => {
+  button.addEventListener("click", () => focusKamikochi(button.dataset.kamikochiView));
+});
+startKamikochiMap();
+
 const dayTabs = [...document.querySelectorAll(".day-bar [data-day]")];
 const dayPanels = [...document.querySelectorAll("[data-day-panel]")];
 function activateDay(day, scroll = true) {

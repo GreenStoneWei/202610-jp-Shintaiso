@@ -12,7 +12,7 @@
 
 .day-bar-inner {
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-columns: repeat(7, minmax(0, 1fr));
   gap: 5px;
   width: min(1080px, calc(100% - 36px));
   margin: auto;
@@ -36,6 +36,8 @@
 
 .day-bar button:hover { background: #e9eee8; }
 .day-bar button[aria-selected="true"] { background: var(--pine); color: #fff; }
+.day-bar button.day-tab-deprecated { color: #756d65; }
+.day-bar button.day-tab-deprecated[aria-selected="true"] { background: #756d65; color: #fff; }
 .day-bar button:focus-visible { outline: 3px solid var(--gold); outline-offset: -2px; }
 .day-bar small { grid-column: 1 / -1; font-size: 10px; font-weight: 700; letter-spacing: .08em; }
 .day-bar strong { font-size: 25px; line-height: 1.1; }
@@ -55,6 +57,7 @@
 .chip-plan { background: #e7edf8; color: #3c5f93; }
 .chip-option { background: #f6eecb; color: #7b6020; }
 .chip-verify { background: #ece8f5; color: #705393; }
+.chip-deprecated { background: #eeeae5; color: #6b6259; }
 .route-panel .timeline h3 { display: flex; align-items: center; flex-wrap: wrap; gap: 7px; }
 .transfer-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
 .transfer-grid article { padding: 20px; border: 1px solid var(--line); border-radius: 16px; background: var(--card); }
@@ -64,6 +67,49 @@
 .section-links { display: flex; flex-wrap: wrap; gap: 8px; padding: 0 0 26px; }
 .section-links a { padding: 6px 10px; border: 1px solid #cbd8cd; border-radius: 999px; color: var(--pine); font-size: 12px; font-weight: 700; text-decoration: none; }
 .section-links a:hover { background: #e9eee8; }
+.kamikochi-compare { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.compare-card { min-width: 0; padding: 22px; border: 1px solid var(--line); border-top: 5px solid #bd7144; border-radius: 16px; background: var(--card); }
+.compare-rail { border-top-color: #496f9c; }
+.compare-head { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 7px; }
+.compare-tag { color: #98552c; font-size: 12px; font-weight: 700; letter-spacing: .06em; }
+.compare-rail .compare-tag { color: #3d6592; }
+.compare-card h3 { margin: 10px 0 2px; font-size: 21px; line-height: 1.35; }
+.compare-route { margin: 0 0 14px; color: var(--muted); font-size: 13px; }
+.compare-facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 0 0 13px; border-radius: 10px; background: #f2f3ee; }
+.compare-facts div { min-width: 0; padding: 11px 9px; border-right: 1px solid var(--line); }
+.compare-facts div:last-child { border: 0; }
+.compare-facts dt { color: var(--muted); font-size: 11px; }
+.compare-facts dd { margin: 2px 0 0; color: var(--pine); font-size: 13px; font-weight: 700; line-height: 1.4; }
+.compare-steps { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; }
+.compare-steps li { display: grid; grid-template-columns: 96px 1fr; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--line); font-size: 12px; }
+.compare-steps strong { color: var(--pine); white-space: nowrap; }
+.compare-caution { margin: 14px 0 0; padding: 12px; border-radius: 9px; background: #f8f0e4; color: #665742; font-size: 12px; }
+.compare-rail .compare-caution { background: #edf2f8; color: #425873; }
+.walk-plan { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 24px; margin-top: 14px; padding: 22px; border: 1px solid #c5d8cc; border-radius: 16px; background: #e6efe9; }
+.walk-plan h3 { margin: 0 0 8px; font-size: 19px; }
+.walk-plan p:not(.eyebrow) { margin: 0; color: #4d6258; font-size: 13px; }
+.walk-plan ol { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.walk-plan li { display: grid; grid-template-columns: 105px 1fr; gap: 8px; font-size: 12px; }
+.walk-plan time { color: var(--pine); font-weight: 700; }
+.kamikochi-map-layout { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(270px, .6fr); gap: 14px; }
+#kamikochi-map { width: 100%; height: 530px; background: #d8e2da; }
+#kamikochi-map-fallback { padding: 30px; color: var(--muted); }
+.kamikochi-map-actions { flex-wrap: wrap; }
+.kamikochi-map-actions button[aria-pressed="true"] { background: var(--pine); border-color: var(--pine); color: white; }
+.kamikochi-map-guide { display: grid; gap: 0; min-width: 0; border: 1px solid #cbd8cd; border-radius: 16px; background: var(--card); }
+.guide-group { padding: 17px 18px; border-bottom: 1px solid var(--line); }
+.guide-group strong { display: flex; align-items: center; gap: 7px; color: var(--pine); font-size: 13px; }
+.guide-group p,.guide-group ol { margin: 7px 0 0; color: var(--muted); font-size: 12px; }
+.guide-group ol { padding-left: 20px; }
+.kamikochi-map-guide .rental-links { align-content: start; padding: 15px 18px; }
+.route-swatch { display: inline-block; flex: 0 0 auto; width: 18px; height: 4px; border-radius: 2px; background: #bd7144; }
+.swatch-rail { background: #496f9c; }
+.swatch-walk { background: #328163; }
+.kamikochi-pin { display: grid; place-items: center; width: 27px; height: 27px; border: 2px solid white; border-radius: 50%; background: var(--pine); box-shadow: 0 2px 8px #1b3a3266; color: white; font-size: 11px; font-weight: 700; }
+.kamikochi-pin.pin-drive { background: #bd7144; }
+.kamikochi-pin.pin-rail { background: #496f9c; }
+.kamikochi-pin.pin-walk { background: #328163; }
+.kamikochi-pin.pin-shared { background: var(--pine); }
 
 @media (max-width: 760px) {
   .day-bar-inner { display: flex; gap: 5px; width: max-content; min-width: 100%; margin: 0; padding: 7px 12px; }
@@ -76,4 +122,19 @@
   .schedule-card .timeline h3 { font-size: 17px; }
   .schedule-card .timeline p { font-size: 13px; }
   .transfer-grid { grid-template-columns: 1fr; }
+  .kamikochi-compare,.walk-plan,.kamikochi-map-layout { grid-template-columns: 1fr; }
+  .compare-card { padding: 17px; }
+  .compare-card h3 { font-size: 19px; }
+  .compare-facts dd { font-size: 12px; }
+  .walk-plan { gap: 15px; padding: 17px; }
+  #kamikochi-map { height: 390px; }
+  .kamikochi-map-guide { order: 2; }
+}
+
+@media (max-width: 390px) {
+  .compare-facts { grid-template-columns: 1fr; }
+  .compare-facts div { display: flex; justify-content: space-between; gap: 8px; padding: 7px 10px; border-right: 0; border-bottom: 1px solid var(--line); }
+  .compare-facts div:last-child { border-bottom: 0; }
+  .compare-steps li { grid-template-columns: 87px 1fr; gap: 7px; }
+  .walk-plan li { grid-template-columns: 95px 1fr; }
 }
