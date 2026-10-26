@@ -131,7 +131,7 @@ const kamikochiPoints = {
   terminal: { name: "上高地巴士總站", note: "回程在此搭車；A 往澤渡、B 往新島々", lat: 36.2458, lng: 137.6364, kind: "shared", label: "巴" },
 };
 const kamikochiRoutes = {
-  drive: ["matsumotoHotel", "sawando", "taisho"],
+  drive: ["takasaki", "matsumotoHotel", "sawando", "taisho"],
   rail: ["takasaki", "nagano", "matsumoto", "matsumotoHotel", "matsumoto", "shinShimashima", "taisho"],
   walk: ["taisho", "tashiro", "kappa", "dakesawa", "myojin", "kappa", "terminal"],
 };
