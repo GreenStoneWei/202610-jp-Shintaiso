@@ -119,9 +119,10 @@ startMap();
 const kamikochiPoints = {
   takasaki: { name: "高崎站／Arena", note: "週日比賽後的出發地", lat: 36.3225, lng: 139.0128, kind: "shared", label: "高" },
   nagano: { name: "長野站", note: "B：週日新幹線轉特急", lat: 36.6431, lng: 138.1886, kind: "rail", label: "長" },
-  matsumoto: { name: "松本站", note: "B：週日晚住宿候選、週一搭上高地線", lat: 36.2304, lng: 137.9643, kind: "rail", label: "松" },
+  matsumoto: { name: "松本站", note: "週日抵達，週一可搭上高地線", lat: 36.2304, lng: 137.9643, kind: "rail", label: "松" },
+  matsumotoHotel: { name: "Hotel M Matsumoto", note: "週日晚住宿已確認；松本站東口步行約 3 分鐘", lat: 36.2296723, lng: 137.9673017, kind: "shared", label: "宿" },
   shinShimashima: { name: "新島々站", note: "B：電車轉預約優先巴士", lat: 36.18973, lng: 137.82165, kind: "rail", label: "新" },
-  sawando: { name: "澤渡巴士總站", note: "A：停車後搭接駁車", lat: 36.16459, lng: 137.65534, kind: "drive", label: "澤" },
+  sawando: { name: "澤渡巴士總站", note: "A：停車後搭免預約接駁車", lat: 36.16459, lng: 137.65534, kind: "drive", label: "澤" },
   taisho: { name: "大正池", note: "兩案在此下車，開始散步", lat: 36.2283, lng: 137.6222, kind: "walk", label: "1" },
   tashiro: { name: "田代池／田代濕原", note: "大正池與河童橋之間的自然研究路", lat: 36.2356, lng: 137.6245, kind: "walk", label: "2" },
   kappa: { name: "河童橋", note: "午餐、休息；視天氣決定是否續走", lat: 36.2483, lng: 137.6376, kind: "walk", label: "3" },
@@ -130,8 +131,8 @@ const kamikochiPoints = {
   terminal: { name: "上高地巴士總站", note: "回程在此搭車；A 往澤渡、B 往新島々", lat: 36.2458, lng: 137.6364, kind: "shared", label: "巴" },
 };
 const kamikochiRoutes = {
-  drive: ["takasaki", "sawando", "taisho"],
-  rail: ["takasaki", "nagano", "matsumoto", "shinShimashima", "taisho"],
+  drive: ["matsumotoHotel", "sawando", "taisho"],
+  rail: ["takasaki", "nagano", "matsumoto", "matsumotoHotel", "matsumoto", "shinShimashima", "taisho"],
   walk: ["taisho", "tashiro", "kappa", "dakesawa", "myojin", "kappa", "terminal"],
 };
 let kamikochiMap;
