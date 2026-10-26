@@ -39,7 +39,7 @@
 .day-bar button:focus-visible { outline: 3px solid var(--gold); outline-offset: -2px; }
 .day-bar small { grid-column: 1 / -1; font-size: 10px; font-weight: 700; letter-spacing: .08em; }
 .day-bar strong { font-size: 25px; line-height: 1.1; }
-.day-bar em { overflow: hidden; font-size: 12px; font-style: normal; font-weight: 700; text-overflow: ellipsis; white-space: nowrap; }
+.day-bar em { grid-column: 1 / -1; overflow: hidden; font-size: 12px; font-style: normal; font-weight: 700; text-overflow: ellipsis; white-space: nowrap; }
 .schedule-legend { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; padding-top: 24px; color: var(--muted); font-size: 11px; }
 .schedule-legend > span:first-child { margin-right: 3px; font-weight: 700; }
 .day-panel { min-height: 420px; scroll-margin-top: 95px; }
@@ -101,6 +101,9 @@
 .walk-plan ol { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
 .walk-plan li { display: grid; grid-template-columns: 105px 1fr; gap: 8px; font-size: 12px; }
 .walk-plan time { color: var(--pine); font-weight: 700; }
+.monday-stay-callout { margin-top: 18px; padding: 19px 22px; border: 1px solid #e7bba8; border-left: 5px solid #b8543e; border-radius: 14px; background: #fff3eb; }
+.monday-stay-callout h3 { margin: 8px 0 5px; color: var(--pine); font-size: 20px; }
+.monday-stay-callout p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.8; }
 .kamikochi-map-layout { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(270px, .6fr); gap: 14px; }
 #kamikochi-map { width: 100%; height: 530px; background: #d8e2da; }
 #kamikochi-map-fallback { padding: 30px; color: var(--muted); }
@@ -124,6 +127,7 @@
 @media (max-width: 760px) {
   .day-bar-inner { display: flex; gap: 5px; width: max-content; min-width: 100%; margin: 0; padding: 7px 12px; }
   .day-bar button { flex: 0 0 92px; padding: 7px 9px; }
+  .day-bar button[data-day="tue"] { flex-basis: 128px; }
   .day-bar strong { font-size: 22px; }
   .day-bar em { font-size: 11px; }
   .day-panel { min-height: 0; scroll-margin-top: 80px; }
