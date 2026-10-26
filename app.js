@@ -215,6 +215,17 @@ function activateDay(day, scroll = true) {
     if (selected) tab.scrollIntoView({ behavior: "smooth", inline: "nearest", block: "nearest" });
   });
   dayPanels.forEach(item => { item.hidden = item !== panel; });
+  requestAnimationFrame(() => {
+    if (day === "fri" && map) {
+      map.invalidateSize();
+      fitMap(false);
+    }
+    if (day === "mon" && kamikochiMap) {
+      kamikochiMap.invalidateSize();
+      const selectedView = document.querySelector('[data-kamikochi-view][aria-pressed="true"]');
+      focusKamikochi(selectedView?.dataset.kamikochiView || "all");
+    }
+  });
   if (scroll) {
     history.replaceState(null, "", `#${panel.id}`);
     panel.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -231,7 +242,8 @@ dayTabs.forEach((tab, index) => {
     dayTabs[next].focus();
   });
 });
-const initialPanel = dayPanels.find(item => `#${item.id}` === location.hash);
+const hashTarget = location.hash ? document.getElementById(location.hash.slice(1)) : null;
+const initialPanel = hashTarget?.closest("[data-day-panel]");
 if (initialPanel) activateDay(initialPanel.dataset.dayPanel, false);
 
 document.querySelectorAll("[data-check]").forEach(box => {

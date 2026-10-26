@@ -12,7 +12,7 @@
 
 .day-bar-inner {
   display: grid;
-  grid-template-columns: repeat(7, minmax(0, 1fr));
+  grid-template-columns: repeat(8, minmax(0, 1fr));
   gap: 5px;
   width: min(1080px, calc(100% - 36px));
   margin: auto;
@@ -43,6 +43,7 @@
 .schedule-legend { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; padding-top: 24px; color: var(--muted); font-size: 11px; }
 .schedule-legend > span:first-child { margin-right: 3px; font-weight: 700; }
 .day-panel { min-height: 420px; scroll-margin-top: 95px; }
+.day-panel .shell { width: 100%; }
 .day-panel .section-title .eyebrow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
 .schedule-card { padding: 12px 24px; border: 1px solid var(--line); border-radius: 18px; background: var(--card); }
 .schedule-card .timeline li { grid-template-columns: 160px minmax(0, 1fr); padding: 24px 0; }
@@ -61,9 +62,21 @@
 .transfer-grid b { color: var(--coral); font-size: 11px; letter-spacing: .06em; }
 .transfer-grid h3 { margin: 9px 0 8px; font-size: 18px; line-height: 1.4; }
 .transfer-grid p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.8; }
-.section-links { display: flex; flex-wrap: wrap; gap: 8px; padding: 0 0 26px; }
-.section-links a { padding: 6px 10px; border: 1px solid #cbd8cd; border-radius: 999px; color: var(--pine); font-size: 12px; font-weight: 700; text-decoration: none; }
-.section-links a:hover { background: #e9eee8; }
+.sunday-choice-heading { margin: 28px 0 14px; }
+.sunday-choice-heading h3 { margin: 0; color: var(--pine); font-size: 23px; line-height: 1.3; }
+.sunday-choice-heading > p:last-child { margin: 5px 0 0; color: var(--muted); font-size: 13px; }
+.sunday-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-bottom: 18px; }
+.sunday-option { min-width: 0; padding: 22px; border: 1px solid var(--line); border-top: 5px solid #bd7144; border-radius: 16px; background: var(--card); }
+.sunday-rail { border-top-color: #496f9c; }
+.sunday-rail .compare-tag { color: #3d6592; }
+.sunday-option h4 { margin: 10px 0 6px; font-size: 20px; line-height: 1.35; }
+.sunday-option ol { margin: 0; padding: 0; list-style: none; }
+.sunday-option li { padding: 12px 0; border-bottom: 1px solid var(--line); }
+.sunday-option li:last-child { border: 0; }
+.sunday-option time { display: block; margin-bottom: 3px; color: var(--coral); font-size: 12px; font-weight: 700; }
+.sunday-rail time { color: #496f9c; }
+.sunday-option li strong { color: var(--pine); font-size: 14px; }
+.sunday-option li p { margin: 4px 0 0; color: var(--muted); font-size: 13px; line-height: 1.8; }
 .kamikochi-compare { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
 .compare-card { min-width: 0; padding: 22px; border: 1px solid var(--line); border-top: 5px solid #bd7144; border-radius: 16px; background: var(--card); }
 .compare-rail { border-top-color: #496f9c; }
@@ -119,6 +132,8 @@
   .schedule-card .timeline h3 { font-size: 17px; }
   .schedule-card .timeline p { font-size: 13px; }
   .transfer-grid { grid-template-columns: 1fr; }
+  .sunday-options { grid-template-columns: 1fr; }
+  .sunday-option { padding: 17px; }
   .kamikochi-compare,.walk-plan,.kamikochi-map-layout { grid-template-columns: 1fr; }
   .compare-card { padding: 17px; }
   .compare-card h3 { font-size: 19px; }
