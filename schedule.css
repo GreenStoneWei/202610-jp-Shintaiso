@@ -36,8 +36,6 @@
 
 .day-bar button:hover { background: #e9eee8; }
 .day-bar button[aria-selected="true"] { background: var(--pine); color: #fff; }
-.day-bar button.day-tab-deprecated { color: #756d65; }
-.day-bar button.day-tab-deprecated[aria-selected="true"] { background: #756d65; color: #fff; }
 .day-bar button:focus-visible { outline: 3px solid var(--gold); outline-offset: -2px; }
 .day-bar small { grid-column: 1 / -1; font-size: 10px; font-weight: 700; letter-spacing: .08em; }
 .day-bar strong { font-size: 25px; line-height: 1.1; }
@@ -57,7 +55,6 @@
 .chip-plan { background: #e7edf8; color: #3c5f93; }
 .chip-option { background: #f6eecb; color: #7b6020; }
 .chip-verify { background: #ece8f5; color: #705393; }
-.chip-deprecated { background: #eeeae5; color: #6b6259; }
 .route-panel .timeline h3 { display: flex; align-items: center; flex-wrap: wrap; gap: 7px; }
 .transfer-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
 .transfer-grid article { padding: 20px; border: 1px solid var(--line); border-radius: 16px; background: var(--card); }
