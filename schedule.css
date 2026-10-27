@@ -45,6 +45,22 @@
 .day-panel { min-height: 420px; scroll-margin-top: 95px; }
 .day-panel .shell { width: 100%; }
 .day-panel .section-title .eyebrow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.weather-day-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-bottom: 22px; }
+.weather-card { margin-bottom: 22px; padding: 17px 20px; border: 1px solid #c9d8d1; border-radius: 15px; background: #edf4f1; }
+.weather-day-grid .weather-card { min-width: 0; margin-bottom: 0; }
+.weather-card-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 5px 12px; }
+.weather-card-head strong { color: var(--pine); font-size: 15px; }
+.weather-kicker { color: #54766b; font-size: 11px; font-weight: 700; }
+.weather-metrics { display: flex; flex-wrap: wrap; gap: 8px; margin: 11px 0 8px; }
+.weather-metrics span { padding: 5px 10px; border-radius: 8px; background: #fff; color: var(--muted); font-size: 12px; }
+.weather-metrics strong { margin-left: 4px; color: var(--pine); font-size: 16px; }
+.weather-card p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.7; }
+.weather-card a { color: var(--pine); font-weight: 700; }
+.weather-mountain { border-color: #e1c09d; background: #f9f1e5; }
+.weather-pending { background: #f1f1ef; }
+.kamikochi-clothing { margin: -7px 0 24px; padding: 18px 20px; border-left: 4px solid var(--pine); border-radius: 0 12px 12px 0; background: #e9f0e8; }
+.kamikochi-clothing h3 { margin: 0 0 8px; color: var(--pine); font-size: 19px; }
+.kamikochi-clothing p { margin: 8px 0 0; color: #455e50; font-size: 13px; line-height: 1.8; }
 .schedule-card { padding: 12px 24px; border: 1px solid var(--line); border-radius: 18px; background: var(--card); }
 .schedule-card .timeline li { grid-template-columns: 160px minmax(0, 1fr); padding: 24px 0; }
 .schedule-card .timeline time { font-size: 13px; }
@@ -123,6 +139,30 @@
 .kamikochi-pin.pin-rail { background: #496f9c; }
 .kamikochi-pin.pin-walk { background: #328163; }
 .kamikochi-pin.pin-shared { background: var(--pine); }
+.tuesday-panel[hidden] { display: none; }
+.tuesday-options-intro { margin-bottom: 18px; padding: 19px 22px; border-radius: 14px; background: #e9f0e8; }
+.tuesday-options-intro h3 { margin: 0 0 5px; color: var(--pine); font-size: 21px; }
+.tuesday-options-intro p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.8; }
+.tuesday-option-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.tuesday-option-card { display: flex; flex-direction: column; min-width: 0; padding: 20px; border: 1px solid var(--line); border-radius: 16px; background: var(--card); }
+.tuesday-option-card h3 { margin: 10px 0 6px; color: var(--pine); font-size: 20px; line-height: 1.4; }
+.tuesday-option-card p { margin: 0 0 10px; color: var(--muted); font-size: 13px; line-height: 1.75; }
+.tuesday-option-card .option-time { margin-top: auto; color: #5f503e; }
+.tuesday-option-card .rental-links { margin-top: 2px; }
+.place-name-help { padding: 8px 0; border-bottom: 1px solid var(--line); background: #e9f0e8; color: #496056; font-size: 12px; }
+.place-item .place-list-signage { margin: 2px 0 0; color: var(--pine); font-size: 13px; font-weight: 700; }
+.place-item .place-list-roman { margin: 0 0 6px; font-size: 11px; }
+.place-name { display: inline; padding: 0; border: 0; border-bottom: 1px dashed #b76d45; border-radius: 0; background: transparent; color: inherit; font: inherit; text-align: inherit; cursor: pointer; }
+.place-name:hover,.place-name:focus-visible { color: #a04d31; }
+.place-name:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.place-name-card { position: fixed; right: max(16px, calc((100vw - 1080px) / 2)); bottom: 20px; z-index: 1000; width: min(350px, calc(100vw - 32px)); padding: 17px 20px; border: 1px solid #bdcfc0; border-radius: 16px; background: #fffdf8; box-shadow: 0 8px 35px #17362e42; }
+.place-name-card[hidden] { display: none; }
+.place-name-card small { display: block; padding-right: 28px; color: var(--muted); font-size: 11px; }
+.place-name-card strong { display: block; margin: 6px 0 2px; color: var(--pine); font-size: 25px; line-height: 1.35; user-select: text; }
+.place-name-card span { color: var(--muted); font-size: 13px; }
+.place-name-close { position: absolute; top: 7px; right: 11px; border: 0; background: transparent; color: var(--pine); font-size: 26px; cursor: pointer; }
+.place-name-actions { margin-top: 12px; }
+.place-name-copy { padding: 8px 12px; border: 0; border-radius: 8px; background: var(--pine); color: #fff; font-size: 12px; font-weight: 700; cursor: pointer; }
 
 @media (max-width: 760px) {
   .day-bar-inner { display: flex; gap: 5px; width: max-content; min-width: 100%; margin: 0; padding: 7px 12px; }
@@ -136,6 +176,8 @@
   .schedule-card .timeline h3 { font-size: 17px; }
   .schedule-card .timeline p { font-size: 13px; }
   .transfer-grid { grid-template-columns: 1fr; }
+  .weather-day-grid { grid-template-columns: 1fr; }
+  .weather-card,.kamikochi-clothing { padding: 15px; }
   .sunday-options { grid-template-columns: 1fr; }
   .sunday-option { padding: 17px; }
   .kamikochi-compare,.walk-plan,.kamikochi-map-layout { grid-template-columns: 1fr; }
@@ -145,6 +187,9 @@
   .walk-plan { gap: 15px; padding: 17px; }
   #kamikochi-map { height: 390px; }
   .kamikochi-map-guide { order: 2; }
+  .tuesday-option-grid { grid-template-columns: 1fr; }
+  .tuesday-option-card,.tuesday-options-intro { padding: 17px; }
+  .place-name-card { right: 12px; bottom: 12px; width: calc(100vw - 24px); }
 }
 
 @media (max-width: 390px) {

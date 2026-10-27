@@ -16,6 +16,10 @@ const places = {
 };
 
 const googleMaps = query => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+const signageFor = place => {
+  const names = place.name.split("／").map(name => window.tripPlaceName?.(name)).filter(Boolean);
+  return { jp: names.map(name => name.jp).join("／") || place.query, roman: names.map(name => name.roman).join(" / ") };
+};
 const list = document.querySelector("#place-list");
 let currentRoute = "kawagoe";
 let map;
@@ -26,8 +30,9 @@ function drawList(route) {
   const title = route === "kawagoe" ? "川越主線 · 地點順序" : "池袋備案 · 地點順序";
   list.innerHTML = `<div class="place-list-head">${title}</div>${places[route].map((place, index) => `
     <div class="place-item"><span class="place-number ${place.transit ? "transit" : ""}">${index + 1}</span><div>
-      <h3>${place.name}</h3><p>${place.note}</p><a href="${googleMaps(place.query)}" target="_blank" rel="noreferrer">Google Maps 開啟 ↗</a>
+      <h3>${place.name}</h3><p class="place-list-signage" lang="ja">${signageFor(place).jp}</p><p class="place-list-roman">${signageFor(place).roman}</p><p>${place.note}</p><a href="${googleMaps(place.query)}" target="_blank" rel="noreferrer">Google Maps 開啟 ↗</a>
     </div></div>`).join("")}`;
+  window.annotatePlaceNames?.(list);
 }
 
 function clearMap() {
@@ -53,7 +58,8 @@ function drawMap(route) {
         className: "map-pin-icon", iconSize: [30, 30], iconAnchor: [15, 15],
       }),
     });
-    marker.bindPopup(`<strong>${place.name}</strong><span>${place.note}</span><a href="${googleMaps(place.query)}" target="_blank" rel="noreferrer">Google Maps 導航 ↗</a>`);
+    const signage = signageFor(place);
+    marker.bindPopup(`<strong>${place.name}</strong><span lang="ja">${signage.jp}</span><span>${signage.roman}</span><span>${place.note}</span><a href="${googleMaps(place.query)}" target="_blank" rel="noreferrer">Google Maps 導航 ↗</a>`);
     marker.addTo(map);
     mapItems.push(marker);
   });
@@ -67,7 +73,7 @@ function drawMap(route) {
 function activateRoute(route) {
   if (!places[route]) return;
   currentRoute = route;
-  document.querySelectorAll(".route-tab").forEach(button => {
+  document.querySelectorAll(".route-tab[data-route]").forEach(button => {
     const selected = button.dataset.route === route;
     button.setAttribute("aria-selected", String(selected));
     button.tabIndex = selected ? 0 : -1;
@@ -101,7 +107,7 @@ function startMap() {
   drawMap(currentRoute);
 }
 
-document.querySelectorAll(".route-tab").forEach(button => {
+document.querySelectorAll(".route-tab[data-route]").forEach(button => {
   button.addEventListener("click", () => activateRoute(button.dataset.route));
   button.addEventListener("keydown", event => {
     if (event.key !== "ArrowRight" && event.key !== "ArrowLeft") return;
@@ -191,7 +197,8 @@ function startKamikochiMap() {
         className: "kamikochi-pin-icon", iconSize: [27, 27], iconAnchor: [13, 13],
       }),
     });
-    marker.bindPopup(`<strong>${point.name}</strong><span>${point.note}</span><a href="${googleMaps(point.name)}" target="_blank" rel="noreferrer">Google Maps 開啟 ↗</a>`);
+    const signage = signageFor(point);
+    marker.bindPopup(`<strong>${point.name}</strong><span lang="ja">${signage.jp}</span><span>${signage.roman}</span><span>${point.note}</span><a href="${googleMaps(point.name)}" target="_blank" rel="noreferrer">Google Maps 開啟 ↗</a>`);
     marker.addTo(kamikochiMap);
     kamikochiMarkers[id] = marker;
   });
@@ -242,9 +249,30 @@ dayTabs.forEach((tab, index) => {
     dayTabs[next].focus();
   });
 });
+const tuesdayTabs = [...document.querySelectorAll("[data-tuesday-tab]")];
+function activateTuesdayTab(name) {
+  tuesdayTabs.forEach(tab => {
+    const selected = tab.dataset.tuesdayTab === name;
+    tab.setAttribute("aria-selected", String(selected));
+    tab.tabIndex = selected ? 0 : -1;
+  });
+  document.querySelectorAll(".tuesday-panel").forEach(panel => { panel.hidden = panel.id !== `tuesday-${name}`; });
+}
+tuesdayTabs.forEach((tab, index) => {
+  tab.addEventListener("click", () => activateTuesdayTab(tab.dataset.tuesdayTab));
+  tab.addEventListener("keydown", event => {
+    if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+    event.preventDefault();
+    const next = event.key === "Home" ? 0 : event.key === "End" ? tuesdayTabs.length - 1
+      : (index + (event.key === "ArrowRight" ? 1 : -1) + tuesdayTabs.length) % tuesdayTabs.length;
+    activateTuesdayTab(tuesdayTabs[next].dataset.tuesdayTab);
+    tuesdayTabs[next].focus();
+  });
+});
 const hashTarget = location.hash ? document.getElementById(location.hash.slice(1)) : null;
 const initialPanel = hashTarget?.closest("[data-day-panel]");
 if (initialPanel) activateDay(initialPanel.dataset.dayPanel, false);
+if (hashTarget?.id === "tuesday-options") activateTuesdayTab("options");
 
 document.querySelectorAll("[data-check]").forEach(box => {
   const key = `jp-trip-discussion-${box.dataset.check}`;
